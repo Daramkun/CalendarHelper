@@ -3,12 +3,12 @@
 
 int main ( void )
 {
-	DateTime dateTime = DateTime::getNow ();
+	daram::DateTime dateTime = daram::DateTime::getNow ();
 
 	printf ( "%4d/%02d/%02d %02d:%02d:%02d (%d)",
 		dateTime.getYear (), dateTime.getMonth (), dateTime.getDay (),
 		dateTime.getHour (), dateTime.getMinute (), dateTime.getSecond (),
-		CalendarHelper::getFirstDayOfMonth ( dateTime.getYear (), dateTime.getMonth () )
+		daram::CalendarHelper::getFirstDayOfMonth ( dateTime.getYear (), dateTime.getMonth () )
 		);
 
 	while ( true )
@@ -17,7 +17,7 @@ int main ( void )
 		printf ( "\r%4d/%02d/%02d %02d:%02d:%02d (%d)",
 			dateTime.getYear (), dateTime.getMonth (), dateTime.getDay (),
 			dateTime.getHour (), dateTime.getMinute (), dateTime.getSecond (),
-			CalendarHelper::getFirstDayOfMonth ( dateTime.getYear (), dateTime.getMonth () )
+			daram::CalendarHelper::getFirstDayOfMonth ( dateTime.getYear (), dateTime.getMonth () )
 			);
 	}
 

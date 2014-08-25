@@ -2,6 +2,8 @@
 #include "CalendarHelper.h"
 #include <ctime>
 
+using namespace daram;
+
 char CalendarHelper::getTotalDaysOfMonth ( int year, int month )
 {
 	switch ( month )
@@ -21,7 +23,7 @@ char CalendarHelper::getTotalDaysOfMonth ( int year, int month )
 Day CalendarHelper::getFirstDayOfMonth ( int year, int month )
 {
 	int dayCode = 0;
-	int x1 = (year - 1) / 4.0f, x2 = (year - 1) / 100.0f, x3 = (year - 1) / 400.0f;
+	int x1 = ( int ) ( ( year - 1 ) / 4.0f ), x2 = ( int ) ( ( year - 1 ) / 100.0f ), x3 = ( int ) ( ( year - 1 ) / 400.0f );
 	dayCode = ( year + x1 - x2 + x3 ) % 7;
 	for ( int i = 1; i < month; ++i )
 		dayCode += CalendarHelper::getTotalDaysOfMonth ( year, i );
