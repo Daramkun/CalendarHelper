@@ -33,41 +33,51 @@ void CalendarHelper::getDateTimeUnit ( long long timeStampDifferents, DateTimeUn
 	if ( timeStampDifferents <= 60 )
 	{
 		unit = DateTimeUnit_Seconds;
-		value = timeStampDifferents;
+		value = ( int ) timeStampDifferents;
 	}
 	else if ( timeStampDifferents <= 3600 )
 	{
 		unit = DateTimeUnit_Minutes;
-		value = timeStampDifferents / 60;
+		value = ( int ) timeStampDifferents / 60;
 	}
 	else if ( timeStampDifferents <= 86400 )
 	{
 		unit = DateTimeUnit_Hours;
-		value = timeStampDifferents / 60 / 60;
+		value = ( int ) timeStampDifferents / 60 / 60;
 	}
 	else if ( timeStampDifferents <= 2678400 )
 	{
 		unit = DateTimeUnit_Days;
-		value = timeStampDifferents / 60 / 60 / 24;
+		value = ( int ) timeStampDifferents / 60 / 60 / 24;
 	}
 	else if ( timeStampDifferents <= 32140800 )
 	{
 		unit = DateTimeUnit_Monthes;
-		value = timeStampDifferents / 60 / 60 / 24 / 31;
+		value = ( int ) timeStampDifferents / 60 / 60 / 24 / 31;
 	}
 	else
 	{
 		unit = DateTimeUnit_Years;
-		value = timeStampDifferents / 60 / 60 / 24 / 31 / 12;
+		value = ( int ) timeStampDifferents / 60 / 60 / 24 / 31 / 12;
 	}
 }
 
 CalendarHelper::CalendarHelper () { }
 
-DateTime DateTime::getNow () { DateTime dateTime; dateTime.setTimeStamp ( _time64 ( nullptr ) ); return dateTime; }
+DateTime DateTime::getNow ()
+{
+    DateTime dateTime; dateTime.setTimeStamp (
+#ifdef WIN32
+                                              _time64 ( nullptr )
+#else
+                                              time ( nullptr )
+#endif
+                                              );
+    return dateTime;
+}
 
 DateTime::DateTime () { year = month = day = hour = minute = second = 0; }
-DateTime::DateTime ( long long timeStamp, bool isGMT ) { if ( !isGMT ) setTimeStamp ( timeStamp ); else setTimeStampGMT ( timeStamp ); }
+DateTime::DateTime ( long long timeStamp ) { setTimeStamp ( timeStamp ); }
 DateTime::DateTime ( short year, char month, char day ) { this->year = year; this->month = month; this->day = day; }
 DateTime::DateTime ( char hour, char minute, char second ) { this->hour = hour; this->minute = minute; this->second = second; }
 DateTime::DateTime ( short year, char month, char day, char hour, char minute, char second )
@@ -107,41 +117,21 @@ long long DateTime::getTimeStamp ()
 	time.tm_min = minute;
 	time.tm_sec = second;
 
+#ifdef WIN32
 	return _mktime64 ( &time );
+#else
+    return mktime ( &time );
+#endif
 }
 
 void DateTime::setTimeStamp ( long long timeStamp )
 {
 	tm time = { 0, };
+#ifdef WIN32
 	_localtime64_s ( &time, &timeStamp );
-
-	year = time.tm_year + 1900;
-	month = time.tm_mon + 1;
-	day = time.tm_mday;
-
-	hour = time.tm_hour;
-	minute = time.tm_min;
-	second = time.tm_sec;
-}
-
-long long DateTime::getTimeStampGMT ()
-{
-	tm time = { 0, };
-	time.tm_year = year - 1900;
-	time.tm_mon = month - 1;
-	time.tm_mday = day;
-
-	time.tm_hour = hour;
-	time.tm_min = minute;
-	time.tm_sec = second;
-
-	return _mkgmtime64 ( &time );
-}
-
-void DateTime::setTimeStampGMT ( long long timeStamp )
-{
-	tm time = { 0, };
-	_gmtime64_s ( &time, &timeStamp );
+#else
+    localtime_r ( ( time_t* ) &timeStamp, &time );
+#endif
 
 	year = time.tm_year + 1900;
 	month = time.tm_mon + 1;
@@ -363,7 +353,8 @@ int DateTime::getTotalDaysFrom1970 ()
 
 bool DateTime::isToday ()
 {
-	return isSameDay ( DateTime::getNow () );
+    DateTime now = DateTime::getNow ();
+	return isSameDay ( now );
 }
 
 bool DateTime::isThisMonth ()

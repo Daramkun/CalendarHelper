@@ -39,7 +39,7 @@ public:
 
 public:
 	DateTime ();
-	DateTime ( long long timeStamp, bool isGMT = false );
+	DateTime ( long long timeStamp );
 	DateTime ( short year, char month, char day );
 	DateTime ( char hour, char minute, char second );
 	DateTime ( short year, char month, char day, char hour, char minute, char second );
@@ -71,9 +71,6 @@ public:
 public:
 	long long getTimeStamp ();
 	void setTimeStamp ( long long timeStamp );
-
-	long long getTimeStampGMT ();
-	void setTimeStampGMT ( long long timeStamp );
 
 public:
 	DateTime getPreviousDay ();

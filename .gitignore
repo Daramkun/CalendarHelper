@@ -23,3 +23,5 @@ Release/
 *.out
 *.app
 *.sdf
+
+*.xcuserstate
