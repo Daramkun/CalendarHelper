@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalendarHelper", "CalendarHelper\CalendarHelper.vcxproj", "{ABA6BE6E-BE1A-4DCD-96C2-57C46464C8FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{315AE9B0-DF05-41B3-87D2-B30DDF11DEE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABA6BE6E-BE1A-4DCD-96C2-57C46464C8FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ABA6BE6E-BE1A-4DCD-96C2-57C46464C8FF}.Debug|Win32.Build.0 = Debug|Win32
+		{ABA6BE6E-BE1A-4DCD-96C2-57C46464C8FF}.Release|Win32.ActiveCfg = Release|Win32
+		{ABA6BE6E-BE1A-4DCD-96C2-57C46464C8FF}.Release|Win32.Build.0 = Release|Win32
+		{315AE9B0-DF05-41B3-87D2-B30DDF11DEE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{315AE9B0-DF05-41B3-87D2-B30DDF11DEE7}.Debug|Win32.Build.0 = Debug|Win32
+		{315AE9B0-DF05-41B3-87D2-B30DDF11DEE7}.Release|Win32.ActiveCfg = Release|Win32
+		{315AE9B0-DF05-41B3-87D2-B30DDF11DEE7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
