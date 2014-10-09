@@ -286,13 +286,8 @@ DateTime daram::DateTime::getPreviousDay ()
 	--dateTime.day;
 	if ( dateTime.day < 1 )
 	{
-		--dateTime.month;
-		if ( dateTime.month < 1 )
-		{
-			--dateTime.year;
-			dateTime.month = 12;
-		}
 		dateTime.day = CalendarHelper::getTotalDaysOfMonth ( dateTime.year, dateTime.month );
+        dateTime = dateTime.getPreviousMonth ();
 	}
 	return dateTime;
 }
@@ -303,13 +298,8 @@ DateTime daram::DateTime::getNextDay ()
 	++dateTime.day;
 	if ( dateTime.day >= CalendarHelper::getTotalDaysOfMonth ( dateTime.year, dateTime.month ) )
 	{
-		++dateTime.month;
-		if ( dateTime.month > 12 )
-		{
-			++dateTime.year;
-			dateTime.month = 1;
-		}
 		dateTime.day = 1;
+        dateTime = dateTime.getNextMonth ();
 	}
 	return dateTime;
 }
@@ -321,13 +311,8 @@ DateTime daram::DateTime::getPreviousWeek ()
 	dateTime.day -= 7;
 	if ( dateTime.day < 1 )
 	{
-		--dateTime.month;
-		if ( dateTime.month < 1 )
-		{
-			dateTime.year -= 1;
-			dateTime.month = 12;
-		}
 		dateTime.day = CalendarHelper::getTotalDaysOfMonth ( dateTime.year, dateTime.month ) + dateTime.day;
+        dateTime = dateTime.getPreviousMonth ();
 	}
 	return dateTime;
 }
@@ -338,18 +323,12 @@ DateTime daram::DateTime::getNextWeek ()
 	dateTime.day += 7;
 	int temp;
 	if ( dateTime.day > ( temp = CalendarHelper::getTotalDaysOfMonth ( dateTime.year, dateTime.month ) ) )
-	{
-		++dateTime.month;
-		if ( dateTime.month > 12 )
-		{
-			++dateTime.year;
-			dateTime.month = 1;
-		}
-		dateTime.day = dateTime.day - temp;
-	}
+    {
+        dateTime.day = dateTime.day - temp;
+        dateTime = dateTime.getNextMonth ();
+    }
 	return dateTime;
 }
-
 
 DateTime daram::DateTime::getPreviousMonth ()
 {
@@ -381,18 +360,8 @@ DateTime daram::DateTime::getPreviousSecond ()
 	--dateTime.second;
 	if ( dateTime.second < 1 )
 	{
-		--dateTime.minute;
 		dateTime.second = 59;
-		if ( dateTime.minute < 1 )
-		{
-			--dateTime.hour;
-			dateTime.minute = 59;
-			if ( dateTime.hour < 1 )
-			{
-				dateTime.hour = 23;
-				dateTime = dateTime.getPreviousDay ();
-			}
-		}
+        dateTime = dateTime.getPreviousMinute ();
 	}
 	return dateTime;
 }
@@ -403,19 +372,9 @@ DateTime daram::DateTime::getNextSecond ()
 	++dateTime.second;
 	if ( dateTime.second > 59 )
 	{
-		++dateTime.minute;
 		dateTime.second = 0;
-		if ( dateTime.minute > 59 )
-		{
-			++dateTime.hour;
-			dateTime.minute = 0;
-			if ( dateTime.hour > 23 )
-			{
-				dateTime.hour = 1;
-				dateTime = dateTime.getNextDay ();
-			}
-		}
-	}
+        dateTime = dateTime.getNextMinute ();
+    }
 	return dateTime;
 }
 
@@ -425,13 +384,8 @@ DateTime daram::DateTime::getPreviousMinute ()
 	--dateTime.minute;
 	if ( dateTime.minute < 1 )
 	{
-		--dateTime.hour;
 		dateTime.minute = 59;
-		if ( dateTime.hour < 1 )
-		{
-			dateTime.hour = 23;
-			dateTime = dateTime.getPreviousDay ();
-		}
+        dateTime = dateTime.getPreviousHour ();
 	}
 	return dateTime;
 }
@@ -442,14 +396,9 @@ DateTime daram::DateTime::getNextMinute ()
 	++dateTime.minute;
 	if ( dateTime.minute > 59 )
 	{
-		++dateTime.hour;
 		dateTime.minute = 0;
-		if ( dateTime.hour > 23 )
-		{
-			dateTime.hour = 1;
-			dateTime = dateTime.getNextDay ();
-		}
-	}
+        dateTime = dateTime.getNextHour ();
+    }
 	return dateTime;
 }
 
